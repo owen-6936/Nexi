@@ -1,0 +1,19 @@
+# Ignore artifacts:
+build
+coverage
+dist
+
+# Dependencies
+node_modules
+pnpm-lock.yaml
+
+# Generated files
+*.min.js
+*.bundle.js
+
+# Config files that should maintain specific formatting
+package-lock.json
+yarn.lock
+
+# Changelog
+CHANGELOG.md
