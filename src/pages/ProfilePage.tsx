@@ -4,42 +4,33 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useUserStore } from '@/store/userStore';
-import { Link2, X } from 'lucide-react';
+import { Link2, LogOut, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function ProfilePage() {
-    const { user, connectAccount } = useUserStore();
+    const { user, connectAccount, clearUser } = useUserStore();
+    const navigate = useNavigate();
 
     if (!user) return null;
 
     const accountLinks = [
         {
-            name: 'Twitter (X)',
-            icon: '𝕏',
-            key: 'twitter' as const,
-            connected: user.connectedAccounts.twitter,
+            name: 'GitHub',
+            icon: '🐙',
+            key: 'github' as const,
+            connected: user.connectedAccounts.github,
         },
         {
-            name: 'Telegram',
-            icon: '✈',
-            key: 'telegram' as const,
-            connected: user.connectedAccounts.telegram,
-        },
-        {
-            name: 'Solana Wallet',
-            icon: '◎',
-            key: 'solanaWallet' as const,
-            connected: user.connectedAccounts.solanaWallet,
+            name: 'Google',
+            icon: '🔵',
+            key: 'google' as const,
+            connected: user.connectedAccounts.google,
         },
     ];
 
-    const handleConnect = (platform: 'twitter' | 'telegram' | 'solanaWallet') => {
+    const handleConnect = (platform: 'github' | 'google') => {
         // Simulated connection - in real app would open OAuth flow
-        const mockIdentifier =
-            platform === 'solanaWallet'
-                ? '9xQe...7Yf3'
-                : platform === 'twitter'
-                  ? '@username'
-                  : '@telegram_user';
+        const mockIdentifier = platform === 'github' ? 'github.com/username' : 'user@gmail.com';
         connectAccount(platform, mockIdentifier);
     };
 
@@ -187,6 +178,27 @@ export function ProfilePage() {
                         ))}
                     </div>
                 </CardContent>
+
+                {/* Logout Card */}
+                <Card className="border-2 border-destructive/50">
+                    <CardHeader>
+                        <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                        <CardDescription>Irreversible actions for your account</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Button
+                            variant="destructive"
+                            className="w-full gap-2"
+                            onClick={() => {
+                                clearUser();
+                                navigate('/login');
+                            }}
+                        >
+                            <LogOut className="h-4 w-4" />
+                            Sign Out
+                        </Button>
+                    </CardContent>
+                </Card>
             </Card>
         </div>
     );

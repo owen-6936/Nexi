@@ -9,9 +9,8 @@ export interface User {
         total: number;
     };
     connectedAccounts: {
-        twitter?: string;
-        telegram?: string;
-        solanaWallet?: string;
+        github?: string;
+        google?: string;
     };
 }
 

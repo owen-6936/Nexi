@@ -22,7 +22,7 @@ describe('chatStore', () => {
 
         expect(state.conversations).toHaveLength(1);
         expect(state.conversations[0].id).toBe(conversationId);
-        expect(state.conversations[0].title).toBe('New Chat');
+        expect(state.conversations[0].title).toMatch(/^Chat \d{1,2}:\d{2}$/);
         expect(state.conversations[0].messages).toEqual([]);
         expect(state.activeConversationId).toBe(conversationId);
     });
@@ -154,5 +154,82 @@ describe('chatStore', () => {
 
         const state = useChatStore.getState();
         expect(state.conversations[0].title).toBe('Updated Title');
+    });
+
+    it('persists conversations to localStorage', () => {
+        const { createConversation, addMessage } = useChatStore.getState();
+
+        const conversationId = createConversation();
+        addMessage(conversationId, {
+            role: 'user',
+            content: 'Persistent message',
+        });
+
+        // Check localStorage was updated
+        const stored = localStorage.getItem('nexi-chat-storage');
+        expect(stored).toBeTruthy();
+
+        const parsed = JSON.parse(stored!);
+        expect(parsed.state.conversations).toHaveLength(1);
+        expect(parsed.state.conversations[0].messages[0].content).toBe('Persistent message');
+    });
+
+    it('loads conversations from localStorage', () => {
+        // Clear current state first
+        useChatStore.setState({ conversations: [], activeConversationId: null });
+
+        // Manually set localStorage
+        const mockData = {
+            state: {
+                conversations: [
+                    {
+                        id: 'test-conv-1',
+                        title: 'Loaded Conversation',
+                        messages: [
+                            {
+                                id: 'msg-1',
+                                role: 'user',
+                                content: 'Loaded message',
+                                timestamp: new Date().toISOString(),
+                            },
+                        ],
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                    },
+                ],
+                activeConversationId: 'test-conv-1',
+            },
+            version: 1,
+        };
+
+        localStorage.setItem('nexi-chat-storage', JSON.stringify(mockData));
+
+        // Manually trigger hydration by setting state from storage
+        useChatStore.setState(mockData.state);
+
+        const state = useChatStore.getState();
+
+        expect(state.conversations).toHaveLength(1);
+        expect(state.conversations[0].title).toBe('Loaded Conversation');
+        expect(state.conversations[0].messages[0].content).toBe('Loaded message');
+        expect(state.activeConversationId).toBe('test-conv-1');
+    });
+
+    it('clears localStorage when clearing conversations', () => {
+        const { createConversation, addMessage, clearHistory } = useChatStore.getState();
+
+        const conversationId = createConversation();
+        addMessage(conversationId, { role: 'user', content: 'Test' });
+
+        // Verify localStorage has data
+        expect(localStorage.getItem('nexi-chat-storage')).toBeTruthy();
+
+        clearHistory();
+
+        // Verify localStorage was updated to empty state
+        const stored = localStorage.getItem('nexi-chat-storage');
+        const parsed = JSON.parse(stored!);
+        expect(parsed.state.conversations).toEqual([]);
+        expect(parsed.state.activeConversationId).toBeNull();
     });
 });

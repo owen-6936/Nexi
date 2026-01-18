@@ -15,7 +15,7 @@ export function Header() {
             className={cn(
                 'fixed top-6 right-6 z-30 h-14',
                 'bg-card backdrop-blur-2xl border-2 border-white/10',
-                'rounded-3xl shadow-2xl shadow-black/50',
+                'rounded-3xl shadow-lg dark:shadow-2xl shadow-black/20 dark:shadow-black/50',
                 'flex items-center justify-between px-4 lg:px-6',
                 'transition-all duration-300',
                 sidebarCollapsed ? 'left-24' : 'left-72',

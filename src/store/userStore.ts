@@ -6,29 +6,25 @@ interface UserStore {
     isAuthenticated: boolean;
     setUser: (user: User) => void;
     updateUser: (updates: Partial<User>) => void;
+    updateCredits: (used: number) => void;
     clearUser: () => void;
-    connectAccount: (platform: 'twitter' | 'telegram' | 'solanaWallet', identifier: string) => void;
+    connectAccount: (platform: 'github' | 'google', identifier: string) => void;
 }
 
 export const useUserStore = create<UserStore>((set) => ({
-    user: {
-        id: '0xA3B250xA3_91b8',
-        email: 'user@nexi.app',
-        name: 'User',
-        plan: 'free',
-        credits: {
-            used: 0,
-            total: 10,
-        },
-        connectedAccounts: {},
-    },
-    isAuthenticated: true,
+    user: null,
+    isAuthenticated: false,
 
     setUser: (user) => set({ user, isAuthenticated: true }),
 
     updateUser: (updates) =>
         set((state) => ({
             user: state.user ? { ...state.user, ...updates } : null,
+        })),
+
+    updateCredits: (used) =>
+        set((state) => ({
+            user: state.user ? { ...state.user, credits: { ...state.user.credits, used } } : null,
         })),
 
     clearUser: () => set({ user: null, isAuthenticated: false }),

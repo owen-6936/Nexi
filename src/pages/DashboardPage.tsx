@@ -25,7 +25,7 @@ export function DashboardPage() {
         if (conversations.length === 0) {
             createConversation();
         }
-    }, []);
+    }, [conversations.length, createConversation]);
 
     useEffect(() => {
         // Scroll to bottom when new messages arrive
@@ -85,7 +85,7 @@ export function DashboardPage() {
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl w-full animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-2xl w-full mx-auto animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-200">
                             {[
                                 'Explain quantum computing',
                                 'Write a Python function',
@@ -187,7 +187,7 @@ export function DashboardPage() {
             {/* Input Area */}
             <div className="p-6 pb-8">
                 <div className="max-w-4xl mx-auto px-6">
-                    <div className="flex gap-2 items-end bg-card backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-3 shadow-2xl shadow-black/50">
+                    <div className="flex gap-2 items-end bg-card backdrop-blur-2xl border-2 border-white/10 rounded-3xl p-3 shadow-lg dark:shadow-2xl shadow-black/20 dark:shadow-black/50">
                         {/* Attachment Button */}
                         <Button
                             size="icon"

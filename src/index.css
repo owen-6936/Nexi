@@ -46,37 +46,57 @@
 
 :root {
     --radius: 0.625rem;
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
+    /* Light theme with soft blue-gray palette */
+    --background: oklch(0.98 0.005 250);
+    --foreground: oklch(0.15 0.01 250);
+
+    /* Cards with subtle elevation */
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
+    --card-foreground: oklch(0.15 0.01 250);
+
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --popover-foreground: oklch(0.15 0.01 250);
+
+    /* Primary blue accent */
+    --primary: oklch(0.55 0.18 250);
+    --primary-foreground: oklch(0.98 0 0);
+
+    /* Secondary elements */
+    --secondary: oklch(0.94 0.01 250);
+    --secondary-foreground: oklch(0.15 0.01 250);
+
+    /* Muted backgrounds and text */
+    --muted: oklch(0.94 0.01 250);
+    --muted-foreground: oklch(0.48 0.01 250);
+
+    /* Accent highlights */
+    --accent: oklch(0.94 0.01 250);
+    --accent-foreground: oklch(0.15 0.01 250);
+
+    /* Destructive actions */
+    --destructive: oklch(0.55 0.22 25);
+
+    /* Borders and inputs */
+    --border: oklch(0.88 0.01 250);
+    --input: oklch(0.88 0.01 250);
+    --ring: oklch(0.55 0.18 250);
+
+    /* Charts */
+    --chart-1: oklch(0.55 0.18 250);
+    --chart-2: oklch(0.6 0.15 160);
+    --chart-3: oklch(0.65 0.16 70);
+    --chart-4: oklch(0.55 0.18 300);
+    --chart-5: oklch(0.6 0.2 15);
+
+    /* Sidebar */
+    --sidebar: oklch(0.99 0 0);
+    --sidebar-foreground: oklch(0.15 0.01 250);
+    --sidebar-primary: oklch(0.55 0.18 250);
+    --sidebar-primary-foreground: oklch(0.98 0 0);
+    --sidebar-accent: oklch(0.95 0.01 250);
+    --sidebar-accent-foreground: oklch(0.15 0.01 250);
+    --sidebar-border: oklch(0.88 0.01 250);
+    --sidebar-ring: oklch(0.55 0.18 250);
 }
 
 .dark {
@@ -113,7 +133,7 @@
 
     /* Borders - subtle */
     --border: oklch(0.15 0 0);
-    --input: oklch(0.08 0 0);
+    --input: oklch(0.12 0 0);
     --ring: oklch(0.65 0.15 250);
 
     /* Charts */
@@ -148,15 +168,24 @@
         font-feature-settings:
             'rlig' 1,
             'calt' 1;
-
-        /* Simple dark background for mobile */
-        background: #05070d;
         position: relative;
     }
 
-    /* Cinematic gradient for large screens */
+    /* Light mode: Clean gradient background */
+    body:not(.dark) {
+        background: linear-gradient(135deg, #f8f9fb 0%, #f1f3f7 50%, #e8ecf3 100%);
+        background-attachment: fixed;
+    }
+
+    /* Dark mode: Cinematic gradient for all screens */
+    html.dark body {
+        background: #05070d;
+        background-attachment: fixed;
+    }
+
+    /* Dark mode: Enhanced cinematic gradient for large screens */
     @media (min-width: 1024px) {
-        body {
+        html.dark body {
             background:
                 radial-gradient(
                     ellipse 25% 55% at 57% 35%,
@@ -176,16 +205,36 @@
         }
     }
 
-    /* Subtle film grain overlay */
+    /* Light mode: Subtle radial accent for large screens */
+    @media (min-width: 1024px) {
+        html:not(.dark) body {
+            background:
+                radial-gradient(
+                    ellipse 30% 50% at 50% 30%,
+                    rgba(90, 130, 255, 0.08) 0%,
+                    rgba(90, 130, 255, 0.04) 40%,
+                    rgba(90, 130, 255, 0) 70%
+                ),
+                linear-gradient(135deg, #f8f9fb 0%, #f1f3f7 50%, #e8ecf3 100%);
+            background-attachment: fixed;
+        }
+    }
+
+    /* Subtle film grain overlay - light theme */
     body::before {
         content: '';
         position: fixed;
         inset: 0;
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-        opacity: 0.03;
+        opacity: 0.02;
         pointer-events: none;
         z-index: 1;
         mix-blend-mode: overlay;
+    }
+
+    /* Enhanced grain for dark theme */
+    html.dark body::before {
+        opacity: 0.03;
     }
 
     /* Remove grid pattern */

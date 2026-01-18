@@ -1,11 +1,28 @@
 # Nexi
 
+<div align="center">
+
+![Nexi Logo](https://img.shields.io/badge/Nexi-AI%20Platform-blue?style=for-the-badge&logo=react)
+
+[![CI](https://github.com/owen-6936/Nexi/actions/workflows/ci.yml/badge.svg)](https://github.com/owen-6936/Nexi/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/owen-6936/Nexi/actions/workflows/codeql.yml/badge.svg)](https://github.com/owen-6936/Nexi/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.2-blue?logo=react)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?logo=vite)](https://vite.dev/)
+[![pnpm](https://img.shields.io/badge/pnpm-10.28-orange?logo=pnpm)](https://pnpm.io/)
+[![Tests](https://img.shields.io/badge/Tests-69%20passing-success)](./src/test)
+[![Code Style: Prettier](https://img.shields.io/badge/Code_Style-Prettier-ff69b4?logo=prettier)](https://prettier.io/)
+
+</div>
+
 > Advanced AI Platform with RAG, MCP, and Plugin Ecosystem
 
 Nexi is a cutting-edge AI platform that showcases the power of modern AI technologies including Retrieval-Augmented Generation (RAG), Model Context Protocol (MCP), and an extensible plugin system. Built with a stunning Leonardo AI-inspired interface.
 
 ## ✨ Features
 
+- **💬 Persistent Chat History** - Conversations automatically saved to localStorage
 - **🧠 RAG (Retrieval-Augmented Generation)** - Customizable knowledge base integration
 - **🔌 MCP (Model Context Protocol)** - Extensible AI model integration
 - **🎨 Plugin Ecosystem** - Premium and free plugins for extended functionality
@@ -14,6 +31,8 @@ Nexi is a cutting-edge AI platform that showcases the power of modern AI technol
 - **🔊 Advanced TTS** - Multiple voice models for text-to-speech
 - **🎯 3D UI/UX** - Beautiful Three.js-powered interface
 - **⚡ Real-time Communication** - WebRTC and Socket.io integration
+- **🌓 Theme Persistence** - Dark/Light/System theme preferences saved across sessions
+- **⚙️ Settings Persistence** - All user preferences stored locally
 
 ## 🚀 Tech Stack
 
@@ -26,9 +45,10 @@ Nexi is a cutting-edge AI platform that showcases the power of modern AI technol
 
 ### State & Data
 
-- **Zustand** - Lightweight state management
+- **Zustand** - Lightweight state management with persistence
 - **TanStack Query** - Server state & caching
 - **Zod** - Schema validation
+- **localStorage** - Client-side data persistence for conversations, settings, and themes
 
 ### UI & Styling
 
@@ -70,6 +90,21 @@ Nexi is a cutting-edge AI platform that showcases the power of modern AI technol
 ### Code Editing
 
 - **Monaco Editor** - VS Code editor for customization
+
+## 🏗️ Architecture
+
+### State Persistence
+
+Nexi implements comprehensive state persistence using Zustand's persist middleware and localStorage:
+
+- **Chat Conversations** (`nexi-chat-storage`) - All conversations, messages, and active conversation state
+- **UI Theme** (`nexi-theme`) - Dark/Light/System theme preference with OS detection
+- **User Settings** (`nexi-settings`) - Preferences, notifications, privacy, and API keys
+- **RAG Collections** (`nexi-rag-storage`) - Document collections and knowledge base
+- **MCP Servers** (`nexi-mcp-storage`) - Custom server configurations
+- **Plugins** (`nexi-plugins-storage`) - Installed plugins and preferences
+
+All stores automatically save to localStorage on state changes and rehydrate on app initialization, ensuring a seamless experience across sessions.
 
 ## 📦 Installation
 

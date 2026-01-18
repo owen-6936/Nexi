@@ -36,10 +36,10 @@ describe('userStore', () => {
     it('connects account', () => {
         const { connectAccount } = useUserStore.getState();
 
-        connectAccount('twitter', '@testuser');
+        connectAccount('github', '@testuser');
 
         const { user } = useUserStore.getState();
-        expect(user?.connectedAccounts.twitter).toBe('@testuser');
+        expect(user?.connectedAccounts.github).toBe('@testuser');
     });
 
     it('clears user', () => {

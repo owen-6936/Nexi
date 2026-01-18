@@ -60,8 +60,8 @@ describe('ProfilePage', () => {
             </BrowserRouter>
         );
 
-        expect(screen.getByText('Twitter (X)')).toBeInTheDocument();
-        expect(screen.getByText('Telegram')).toBeInTheDocument();
-        expect(screen.getByText('Solana Wallet')).toBeInTheDocument();
+        expect(screen.getByText('GitHub')).toBeInTheDocument();
+        expect(screen.getByText('Google')).toBeInTheDocument();
+        expect(screen.getByText('Link your accounts')).toBeInTheDocument();
     });
 });
